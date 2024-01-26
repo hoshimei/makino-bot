@@ -1,6 +1,4 @@
 import dayjs from 'dayjs/'
-import dayjsUtc from 'dayjs/plugin/utc'
-import dayjsTimezone from 'dayjs/plugin/timezone'
 import { AutoConfigPath, BotUsername, ImgBasePath } from './const.ts'
 import type { Result } from './types.ts'
 import { birthdayIdol, randomIdol } from './idol.ts'
@@ -13,13 +11,11 @@ import {
 } from './telegram.ts'
 import { HookPath } from './const.ts'
 
-dayjs.extend(dayjsUtc)
-dayjs.extend(dayjsTimezone)
-
 export async function updateMakino(botToken: string, groupId: string) {
   const lastChat = await getChat(botToken, groupId)
   const lastTitle = lastChat.title
-  let result = birthdayIdol()
+  const now = dayjs()
+  let result = birthdayIdol(now)
   if (result && lastTitle == result.title) {
     return
   }
