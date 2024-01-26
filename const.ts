@@ -25,6 +25,7 @@ export const Characters: CharacterInfo[] = [
   { name: '高海 千歌', image: 'icon_chk.png', birthday: '08/01' },
   { name: '桜内 梨子', image: 'icon_rik.png', birthday: '09/19' },
   { name: '渡辺 曜', image: 'icon_yo.png', birthday: '04/17' },
+  { name: '初音 ミク', image: '../chr/adv_miku-00.png', birthday: '08/31' },
 ]
 
 export const DefaultGroupId = '-1001182241994'
