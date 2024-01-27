@@ -1,5 +1,11 @@
 import dayjs from 'dayjs/'
-import { AutoConfigPath, BotUsername, ImgBasePath } from './const.ts'
+import {
+  AutoConfigPath,
+  BotUsername,
+  Characters,
+  DebugGroupId,
+  ImgBasePath,
+} from './const.ts'
 import type { Result } from './types.ts'
 import { birthdayIdol, randomIdol } from './idol.ts'
 import {
@@ -11,7 +17,11 @@ import {
 } from './telegram.ts'
 import { HookPath } from './const.ts'
 
-export async function updateMakino(botToken: string, groupId: string) {
+export async function updateMakino(
+  botToken: string,
+  groupId: string,
+  debugIndex?: number
+) {
   const lastChat = await getChat(botToken, groupId)
   const lastTitle = lastChat.title
   const now = dayjs()
@@ -25,7 +35,12 @@ export async function updateMakino(botToken: string, groupId: string) {
       if (result.title !== lastTitle) break
     }
   }
-  const { title, image } = result as Result
+  let { title, image } = result as Result
+  if (debugIndex) {
+    const debugItem = Characters[debugIndex]
+    title = `D+${debugItem.name}`
+    image = debugItem.image
+  }
   console.log(`Updating chat ${groupId} to ${title}`)
   await Promise.all([
     changeTitle(botToken, groupId, title),
@@ -43,8 +58,12 @@ async function handleMessage(m: any) {
   }
 
   if (m.text && m.text.startsWith('/change_title')) {
+    const debugIndex =
+      m?.chat?.id === DebugGroupId
+        ? Number(m.text.match(/d\+(\d+)/)?.[1])
+        : undefined
     // update the title
-    await updateMakino(botToken, m.chat.id)
+    await updateMakino(botToken, m.chat.id, debugIndex)
     return
   }
 }

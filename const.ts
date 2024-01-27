@@ -34,6 +34,8 @@ export const Characters: CharacterInfo[] = [
 
 export const DefaultGroupId = '-1001182241994'
 
+export const DebugGroupId = '-1002045689811'
+
 export const ImgBasePath =
   'https://res.cloudinary.com/dwgvzwmqu/image/upload/ipri/assets/img/message/'
 
