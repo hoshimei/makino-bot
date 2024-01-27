@@ -59,7 +59,7 @@ async function handleMessage(m: any) {
 
   if (m.text && m.text.startsWith('/change_title')) {
     const debugIndex =
-      m?.chat?.id === DebugGroupId
+      String(m?.chat?.id) === DebugGroupId
         ? Number(m.text.match(/d\+(\d+)/)?.[1])
         : undefined
     // update the title
