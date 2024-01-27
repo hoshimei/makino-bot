@@ -1,4 +1,4 @@
-import { assertEquals } from 'https://deno.land/std@0.212.0/assert/mod.ts'
+import { assertEquals } from 'std/assert/mod.ts'
 import { birthdayIdol } from './idol.ts'
 import dayjs from 'dayjs/'
 

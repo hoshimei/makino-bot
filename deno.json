@@ -3,6 +3,7 @@
     "dev": "deno run --watch deno.ts"
   },
   "imports": {
-    "dayjs/": "https://esm.sh/dayjs@1.11.10/"
+    "dayjs/": "https://esm.sh/dayjs@1.11.10/",
+    "std/": "https://deno.land/std@0.213.0/"
   }
 }
