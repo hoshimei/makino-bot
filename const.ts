@@ -35,7 +35,7 @@ export const Characters: CharacterInfo[] = [
 export const DefaultGroupId = '-1001182241994'
 
 export const ImgBasePath =
-  'https://res.cloudinary.com/dwgvzwmqu/image/upload/f_auto/ipri/assets/img/message/'
+  'https://res.cloudinary.com/dwgvzwmqu/image/upload/ipri/assets/img/message/'
 
 export const AutoConfigPath = '/'
 
