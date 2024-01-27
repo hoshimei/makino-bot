@@ -95,6 +95,8 @@ export async function handleRequest(r: Request): Promise<Response> {
         return new Response(null, { status: 403 })
       }
       await handleUpdate(await r.json())
+
+      return new Response('ok', { status: 200 })
       break
     }
   }
