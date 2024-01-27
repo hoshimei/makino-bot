@@ -37,8 +37,17 @@ export function changeTitle(botToken: string, groupId: string, title: string) {
   )
 }
 
-export function setupWebhook(botToken: string, url: string) {
-  return tg(botToken, `setWebhook?url=${encodeURIComponent(url)}`)
+export function setupWebhook(
+  botToken: string,
+  url: string,
+  secretToken: string
+) {
+  return tg(
+    botToken,
+    `setWebhook?url=${encodeURIComponent(
+      url
+    )}&secret_token=${encodeURIComponent(secretToken)}`
+  )
 }
 
 export async function changeAvatar(

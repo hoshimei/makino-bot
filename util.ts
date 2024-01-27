@@ -62,26 +62,43 @@ export async function handleRequest(r: Request): Promise<Response> {
     return new Response('No bot token', { status: 500 })
   }
 
+  const secToken = Deno.env.get('SECURITY_TOKEN') ?? ''
+
   const requestUrl = new URL(r.url)
   const pathname = requestUrl.pathname
   switch (pathname) {
     case AutoConfigPath: {
-      await setupWebhook(botToken, requestUrl.origin + HookPath)
-      break
+      if (secToken) {
+        const requestAuthToken =
+          r.headers.get('Authorization')?.replace('Bearer ', '') ??
+          requestUrl.searchParams.get('key')
+        if (requestAuthToken !== secToken) {
+          return new Response('Bad token', {
+            status: 403,
+          })
+        }
+      }
+      await setupWebhook(botToken, requestUrl.origin + HookPath, secToken)
+      console.log('Setup completed.')
+      return new Response(`Setup OK: ${requestUrl.origin}`, {
+        status: 200,
+      })
     }
     case HookPath: {
+      if (r.method !== 'POST') {
+        return new Response(null, { status: 405 })
+      }
+      if (
+        secToken !== '' &&
+        r.headers.get('X-Telegram-Bot-Api-Secret-Token') !== secToken
+      ) {
+        return new Response(null, { status: 403 })
+      }
       await handleUpdate(await r.json())
       break
     }
-    default: {
-      return new Response(null, {
-        status: 404,
-      })
-    }
   }
-
-  console.log('Setup completed.')
-  return new Response(`Setup OK: ${requestUrl.origin}`, {
-    status: 200,
+  return new Response(null, {
+    status: 404,
   })
 }
