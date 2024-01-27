@@ -94,10 +94,10 @@ export async function handleRequest(r: Request): Promise<Response> {
       ) {
         return new Response(null, { status: 403 })
       }
-      await handleUpdate(await r.json())
-
+      await handleUpdate(await r.json()).catch((e) => {
+        console.error('Handleing update:', e)
+      })
       return new Response('ok', { status: 200 })
-      break
     }
   }
   return new Response(null, {
