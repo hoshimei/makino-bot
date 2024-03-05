@@ -6,7 +6,7 @@ export type Result = {
 export type CharacterInfo = {
   name: string
   image: string
-  birthday: string
+  birthday?: string
 }
 
 export type Chat = {

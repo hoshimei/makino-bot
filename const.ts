@@ -30,6 +30,14 @@ export const Characters: CharacterInfo[] = [
     image: '../card/thumb_1_mku-05-miku-00.png',
     birthday: '08/31',
   },
+  {
+    name: '小南 来夢',
+    image: '../chr/adv_lim-00.png',
+  },
+  {
+    name: '大須賀 れもん',
+    image: '../chr/adv_lmn-00.png',
+  },
 ]
 
 export const DefaultGroupId = '-1001182241994'
