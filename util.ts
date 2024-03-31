@@ -26,8 +26,7 @@ export async function updateMakino(
   const lastTitle = lastChat.title
   const now = dayjs().tz('Asia/Tokyo')
   const mmdd = now.format('MM/DD')
-  let result
-  result = specialDateOffer(mmdd) ?? birthdayIdol(mmdd)
+  let result = specialDateOffer(mmdd) ?? birthdayIdol(mmdd)
   if (result && lastTitle == result.title) {
     return
   }
