@@ -24,7 +24,7 @@ export async function updateMakino(
 ) {
   const lastChat = await getChat(botToken, groupId)
   const lastTitle = lastChat.title
-  const now = dayjs.tz('Asia/Tokyo')
+  const now = dayjs().tz('Asia/Tokyo')
   const mmdd = now.format('MM/DD')
   let result
   result = specialDateOffer(mmdd) ?? birthdayIdol(mmdd)
