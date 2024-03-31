@@ -1,15 +1,13 @@
-import dayjs, { Dayjs } from 'dayjs/'
+import dayjs from 'dayjs/'
 import dayjsUtc from 'dayjs/plugin/utc'
 import dayjsTimezone from 'dayjs/plugin/timezone'
 import { Characters } from './const.ts'
-import type { Result } from './types.ts'
+import type { CharacterInfo, Result } from './types.ts'
 
 dayjs.extend(dayjsUtc)
 dayjs.extend(dayjsTimezone)
 
-export function birthdayIdol(day: Dayjs): Result | null {
-  const now = day.tz('Asia/Tokyo')
-  const mmdd = now.format('MM/DD')
+export function birthdayIdol(mmdd: string): Result | null {
   const bdCharacters = Characters.find((x) => x.birthday == mmdd)
   if (!bdCharacters) {
     return null
@@ -20,7 +18,8 @@ export function birthdayIdol(day: Dayjs): Result | null {
   }
 }
 
-export function randomIdol(): Result {
-  const item = Characters[Math.floor(Math.random() * Characters.length)]
+export function randomIdol(alternativeList?: CharacterInfo[]): Result {
+  const list = alternativeList ?? Characters
+  const item = list[Math.floor(Math.random() * Characters.length)]
   return { title: `${item.name.replace(/ /g, '')}かわいい`, image: item.image }
 }

@@ -7,6 +7,7 @@ export type CharacterInfo = {
   name: string
   image: string
   birthday?: string
+  isCollab?: boolean
 }
 
 export type Chat = {

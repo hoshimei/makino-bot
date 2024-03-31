@@ -24,8 +24,10 @@ export async function updateMakino(
 ) {
   const lastChat = await getChat(botToken, groupId)
   const lastTitle = lastChat.title
-  const now = dayjs()
-  let result = birthdayIdol(now)
+  const now = dayjs.tz('Asia/Tokyo')
+  const mmdd = now.format('MM/DD')
+  let result
+  result = specialDateOffer(mmdd) ?? birthdayIdol(mmdd)
   if (result && lastTitle == result.title) {
     return
   }
@@ -122,4 +124,14 @@ export async function handleRequest(r: Request): Promise<Response> {
   return new Response(null, {
     status: 404,
   })
+}
+
+function specialDateOffer(date: string): Result | null {
+  switch (date) {
+    case '04/01': {
+      return randomIdol(Characters.filter((x) => x.isCollab))
+    }
+  }
+
+  return null
 }

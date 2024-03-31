@@ -22,13 +22,24 @@ export const Characters: CharacterInfo[] = [
   { name: 'kana', image: 'icon_kan.png', birthday: '04/10' },
   { name: 'miho', image: 'icon_mhk.png', birthday: '01/25' },
   { name: '長瀬 麻奈', image: 'icon_mna.png', birthday: '10/09' },
-  { name: '高海 千歌', image: 'icon_chk.png', birthday: '08/01' },
-  { name: '桜内 梨子', image: 'icon_rik.png', birthday: '09/19' },
-  { name: '渡辺 曜', image: 'icon_yo.png', birthday: '04/17' },
+  {
+    name: '高海 千歌',
+    image: 'icon_chk.png',
+    birthday: '08/01',
+    isCollab: true,
+  },
+  {
+    name: '桜内 梨子',
+    image: 'icon_rik.png',
+    birthday: '09/19',
+    isCollab: true,
+  },
+  { name: '渡辺 曜', image: 'icon_yo.png', birthday: '04/17', isCollab: true },
   {
     name: '初音 ミク',
     image: '../card/thumb_1_mku-05-miku-00.png',
     birthday: '08/31',
+    isCollab: true,
   },
 ]
 
