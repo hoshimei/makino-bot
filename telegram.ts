@@ -1,3 +1,5 @@
+import type { Chat } from './types.ts'
+
 async function tg(
   botToken: string,
   path: string,
@@ -10,6 +12,31 @@ async function tg(
       : fetch(requestUrl, {
           method: 'POST',
           body: formData,
+        })
+  return fetchBase
+    .then((x) => x.json())
+    .then((x) => {
+      console.debug('TG request:', path)
+      console.debug('TG response:', x)
+      return x
+    })
+}
+
+async function tgJson(
+  botToken: string,
+  path: string,
+  data?: string
+): Promise<any> {
+  const requestUrl = `https://api.telegram.org/bot${botToken}/${path}`
+  const fetchBase =
+    data === undefined
+      ? fetch(requestUrl)
+      : fetch(requestUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: data,
         })
   return fetchBase
     .then((x) => x.json())
@@ -68,4 +95,25 @@ export async function deleteMessage(
   messageId: string
 ) {
   return tg(botToken, `deleteMessage?chat_id=${chatId}&message_id=${messageId}`)
+}
+
+export async function sendMessage(
+  botToken: string,
+  chatId: number,
+  message: string,
+  replyToMessageId?: number
+) {
+  const body = {
+    text: message,
+    parse_mode: 'HTML',
+    ...(replyToMessageId
+      ? {
+          reply_parameters: {
+            message_id: replyToMessageId,
+          },
+        }
+      : {}),
+  }
+
+  return tgJson(botToken, `sendMessage?chat_id=${chatId}`, JSON.stringify(body))
 }

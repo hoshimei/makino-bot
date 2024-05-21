@@ -16,6 +16,7 @@ import {
   setupWebhook,
 } from './telegram.ts'
 import { HookPath } from './const.ts'
+import { enrollLeagueAlert, unenrollLeagueAlert } from './league.ts'
 
 export async function updateMakino(
   botToken: string,
@@ -66,6 +67,14 @@ async function handleMessage(m: any) {
     // update the title
     await updateMakino(botToken, m.chat.id, debugIndex)
     return
+  }
+
+  if (m.text && m.text.startsWith('/enroll')) {
+    await enrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
+  }
+
+  if (m.text && m.text.startsWith('/unenroll')) {
+    await unenrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
   }
 }
 

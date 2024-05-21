@@ -11,5 +11,12 @@ export type CharacterInfo = {
 }
 
 export type Chat = {
+  id: number
   title: string
+}
+
+export type User = {
+  id: number
+  first_name: String
+  last_name?: String
 }
