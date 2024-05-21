@@ -16,7 +16,11 @@ import {
   setupWebhook,
 } from './telegram.ts'
 import { HookPath } from './const.ts'
-import { enrollLeagueAlert, unenrollLeagueAlert } from './league.ts'
+import {
+  enrollLeagueAlert,
+  sendLeagueReminder,
+  unenrollLeagueAlert,
+} from './league.ts'
 
 export async function updateMakino(
   botToken: string,
@@ -71,10 +75,17 @@ async function handleMessage(m: any) {
 
   if (m.text && m.text.startsWith('/enroll')) {
     await enrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
+    return
   }
 
   if (m.text && m.text.startsWith('/unenroll')) {
     await unenrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
+    return
+  }
+
+  if (m.text && m.text.startsWith('/debug_reminder')) {
+    await sendLeagueReminder(botToken, m.chat.id)
+    return
   }
 }
 
