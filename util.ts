@@ -82,11 +82,6 @@ async function handleMessage(m: any) {
     await unenrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
     return
   }
-
-  if (m.text && m.text.startsWith('/debug_reminder')) {
-    await sendLeagueReminder(botToken, m.chat.id)
-    return
-  }
 }
 
 async function handleUpdate(u: any) {
