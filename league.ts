@@ -44,6 +44,6 @@ export async function sendLeagueReminder(botToken: string, groupId: number) {
   await sendMessage(
     botToken,
     groupId,
-    [titleText, mentionText, footerText].join('<br/>')
+    [titleText, mentionText, footerText].join('<br>')
   )
 }
