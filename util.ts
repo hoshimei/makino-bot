@@ -13,6 +13,7 @@ import {
   changeTitle,
   deleteMessage,
   getChat,
+  sendMessage,
   setupWebhook,
 } from './telegram.ts'
 import { HookPath } from './const.ts'
@@ -81,6 +82,23 @@ async function handleMessage(m: any) {
   if (m.text && m.text.startsWith('/unenroll')) {
     await unenrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
     return
+  }
+
+  if (m.chat.title.includes('#test')) {
+    if (m.text && m.text.startsWith('/debug_reminder')) {
+      await sendLeagueReminder(botToken, m.chat.id)
+      return
+    }
+
+    if (m.text && m.text.startsWith('/id')) {
+      await sendMessage(
+        botToken,
+        m.chat.id,
+        `Chat ID: ${m.chat.id}\nUser ID: ${m.from.id}`,
+        m.message_id
+      )
+      return
+    }
   }
 }
 
