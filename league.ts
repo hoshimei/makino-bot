@@ -14,7 +14,9 @@ export async function enrollLeagueAlert(
   user: User
 ) {
   const ret = await addIdToEnrollment(user.id, chatId).catch((x) => String(x))
-  const message = ret ?? 'Done.'
+  const message =
+    ret ??
+    'Enrolled.\nYou will receive a reminder at 9 AM JST on every Monday.\nTo unenroll, use /unenroll in this group.'
   await sendMessage(botToken, chatId, message, messageId)
 }
 
@@ -27,7 +29,7 @@ export async function unenrollLeagueAlert(
   const ret = await removeIdFromEnrollment(user.id, chatId).catch((x) =>
     String(x)
   )
-  const message = ret ?? 'Done.'
+  const message = ret ?? 'Unenrolled.\nTo re-enroll, use /enroll in this group.'
   await sendMessage(botToken, chatId, message, messageId)
 }
 
