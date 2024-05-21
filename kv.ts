@@ -23,3 +23,9 @@ export async function removeIdFromEnrollment(userId: number, chatId: number) {
   )
   return null
 }
+
+export async function getEnrollmentUserIds(chatId: number) {
+  const kv = await Deno.openKv()
+  const key = [chatId]
+  return ((await kv.get(key)).value as number[]) ?? []
+}
