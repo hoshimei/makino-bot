@@ -14,7 +14,9 @@ Deno.cron('Do the Makino job', '0 * * * *', () => {
   }
 })
 
-Deno.cron('Weekly League reminder', '0 0 * * 1', () => {
+// 2 is Monday
+// https://docs.deno.com/deploy/kv/manual/cron#day-of-week-numeric-representation
+Deno.cron('Weekly League reminder', '0 0 * * 2', () => {
   const groupIds = Deno.env.get('GROUP_IDS')?.split(',') ??
     ([Deno.env.get('GROUP_ID')] as string[]) ?? [DefaultGroupId]
   const botToken = Deno.env.get('BOT_TOKEN')
