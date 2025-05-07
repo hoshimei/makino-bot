@@ -41,6 +41,18 @@ export const Characters: CharacterInfo[] = [
     birthday: '08/31',
     isCollab: true,
   },
+  {
+    name: 'ココア',
+    image: 'icon_cca.png',
+    birthday: '04/10',
+    isCollab: true,
+  },
+  {
+    name: 'チノ',
+    image: 'icon_chn.png',
+    birthday: '12/04',
+    isCollab: true,
+  },
 ]
 
 export const DefaultGroupId = '-1001182241994'
