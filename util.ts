@@ -26,6 +26,7 @@ import {
 export async function updateMakino(
   botToken: string,
   groupId: string,
+  forced: boolean,
   debugIndex?: number
 ) {
   const lastChat = await getChat(botToken, groupId)
@@ -34,6 +35,11 @@ export async function updateMakino(
   const mmdd = now.format('MM/DD')
   let result = specialDateOffer(mmdd) ?? birthdayIdol(mmdd)
   if (result && lastTitle == result.title) {
+    if (forced) {
+      // Don't update title but try to update image
+      const { image } = result
+      await Promise.all([changeAvatar(botToken, groupId, ImgBasePath + image)])
+    }
     return
   }
   if (result === null) {
@@ -70,7 +76,7 @@ async function handleMessage(m: any) {
         ? Number(m.text.match(/d\+(\d+)/)?.[1])
         : undefined
     // update the title
-    await updateMakino(botToken, m.chat.id, debugIndex)
+    await updateMakino(botToken, m.chat.id, true, debugIndex)
     return
   }
 

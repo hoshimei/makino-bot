@@ -10,7 +10,7 @@ Deno.cron('Do the Makino job', '0 * * * *', () => {
     throw new Error('No bot token')
   }
   for (const i of groupIds) {
-    updateMakino(botToken, i).catch(console.error)
+    updateMakino(botToken, i, false).catch(console.error)
   }
 })
 
