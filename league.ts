@@ -1,4 +1,3 @@
-import { randomColor } from './color.ts'
 import {
   addIdToEnrollment,
   removeIdFromEnrollment,
@@ -45,8 +44,8 @@ export async function sendLeagueReminder(botToken: string, groupId: number) {
   )
   const titleText = "Don't forget to setup the League unit!"
   const mentionText = userIds
-    .map((id) => `<a href="tg://user?id=${id}">${randomColor()}</a>`)
-    .join(', ')
+    .map((id) => `<a href="tg://user?id=${id}">\u200b</a>`)
+    .join(' ')
   const footerText = 'To unenroll, use /unenroll in this group.'
   await sendMessage(
     botToken,
