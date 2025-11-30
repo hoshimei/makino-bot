@@ -26,32 +26,73 @@ export const Characters: CharacterInfo[] = [
     name: '高海 千歌',
     image: 'icon_chk.png',
     birthday: '08/01',
-    isCollab: true,
   },
   {
     name: '桜内 梨子',
     image: 'icon_rik.png',
     birthday: '09/19',
-    isCollab: true,
   },
-  { name: '渡辺 曜', image: 'icon_yo.png', birthday: '04/17', isCollab: true },
+  { name: '渡辺 曜', image: 'icon_yo.png', birthday: '04/17' },
   {
     name: '初音 ミク',
     image: '../card/thumb_1_mku-05-miku-00.png',
     birthday: '08/31',
-    isCollab: true,
   },
   {
     name: 'ココア',
     image: 'icon_cca.png',
     birthday: '04/10',
-    isCollab: true,
   },
   {
     name: 'チノ',
     image: 'icon_chn.png',
     birthday: '12/04',
-    isCollab: true,
+  },
+  // Gakumas
+  {
+    name: '咲季',
+    image: '../../nonipr/icon_A.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '手毬',
+    image: '../../nonipr/icon_B.png',
+    isAprilOffer: true,
+  },
+  {
+    name: 'ことね',
+    image: '../../nonipr/icon_C.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '莉波',
+    image: '../../nonipr/icon_D.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '清夏',
+    image: '../../nonipr/icon_E.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '広',
+    image: '../../nonipr/icon_F.png',
+    isAprilOffer: true,
+  },
+  {
+    name: 'リーリヤ',
+    image: '../../nonipr/icon_G.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '千奈',
+    image: '../../nonipr/icon_H.png',
+    isAprilOffer: true,
+  },
+  {
+    name: '麻央',
+    image: '../../nonipr/icon_I.png',
+    isAprilOffer: true,
   },
 ]
 

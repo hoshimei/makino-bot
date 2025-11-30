@@ -167,7 +167,7 @@ export async function handleRequest(r: Request): Promise<Response> {
 function specialDateOffer(date: string): Result | null {
   switch (date) {
     case '04/01': {
-      return randomIdol(Characters.filter((x) => x.isCollab))
+      return randomIdol(Characters.filter((x) => x.isAprilOffer))
     }
   }
 

@@ -19,7 +19,7 @@ export function birthdayIdol(mmdd: string): Result | null {
 }
 
 export function randomIdol(alternativeList?: CharacterInfo[]): Result {
-  const list = alternativeList ?? Characters
+  const list = alternativeList ?? Characters.filter((x) => !x.isAprilOffer)
   const item = list[Math.floor(Math.random() * list.length)]
   return { title: `${item.name.replace(/ /g, '')}かわいい`, image: item.image }
 }
