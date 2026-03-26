@@ -27,7 +27,7 @@ export async function updateMakino(
   botToken: string,
   groupId: string,
   forced: boolean,
-  debugIndex?: number
+  debugIndex?: number,
 ) {
   const lastChat = await getChat(botToken, groupId)
   const lastTitle = lastChat.title
@@ -101,7 +101,7 @@ async function handleMessage(m: any) {
         botToken,
         m.chat.id,
         `Chat ID: ${m.chat.id}\nUser ID: ${m.from.id}`,
-        m.message_id
+        m.message_id,
       )
       return
     }
@@ -122,20 +122,21 @@ export async function handleRequest(r: Request): Promise<Response> {
   }
 
   const secToken = Deno.env.get('SECURITY_TOKEN') ?? ''
+  if (!secToken) {
+    return new Response('No sec token', { status: 500 })
+  }
 
   const requestUrl = new URL(r.url)
   const pathname = requestUrl.pathname
   switch (pathname) {
     case AutoConfigPath: {
-      if (secToken) {
-        const requestAuthToken =
-          r.headers.get('Authorization')?.replace('Bearer ', '') ??
-          requestUrl.searchParams.get('key')
-        if (requestAuthToken !== secToken) {
-          return new Response('Bad token', {
-            status: 403,
-          })
-        }
+      const requestAuthToken =
+        r.headers.get('Authorization')?.replace('Bearer ', '') ??
+        requestUrl.searchParams.get('key')
+      if (requestAuthToken !== secToken) {
+        return new Response('Bad token', {
+          status: 403,
+        })
       }
       await setupWebhook(botToken, requestUrl.origin + HookPath, secToken)
       console.log('Setup completed.')
