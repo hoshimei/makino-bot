@@ -1,5 +1,5 @@
-import { assertEquals } from 'std/assert/mod.ts'
-import { birthdayIdol } from './idol.ts'
+import { assertEquals } from 'std/assert/mod'
+import { birthdayIdol } from './idol'
 import dayjs from 'dayjs/'
 
 Deno.test('birthdayIdol 1', () => {

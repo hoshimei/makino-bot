@@ -2,17 +2,20 @@ import {
   addIdToEnrollment,
   removeIdFromEnrollment,
   getEnrollmentUserIds,
-} from './kv.ts'
-import { sendMessage } from './telegram.ts'
-import type { User } from './types.ts'
+} from './kv'
+import { sendMessage } from './telegram'
+import type { User } from './types'
 
 export async function enrollLeagueAlert(
   botToken: string,
   messageId: number,
   chatId: number,
-  user: User
+  user: User,
+  kv: KVNamespace,
 ) {
-  const ret = await addIdToEnrollment(user.id, chatId).catch((x) => String(x))
+  const ret = await addIdToEnrollment(user.id, chatId, kv).catch((x) =>
+    String(x),
+  )
   const message =
     ret ??
     'Enrolled.\nYou will receive a reminder at 9 AM JST on every Monday.\nTo unenroll, use /unenroll in this group.'
@@ -23,24 +26,29 @@ export async function unenrollLeagueAlert(
   botToken: string,
   messageId: number,
   chatId: number,
-  user: User
+  user: User,
+  kv: KVNamespace,
 ) {
-  const ret = await removeIdFromEnrollment(user.id, chatId).catch((x) =>
-    String(x)
+  const ret = await removeIdFromEnrollment(user.id, chatId, kv).catch((x) =>
+    String(x),
   )
   const message = ret ?? 'Unenrolled.\nTo re-enroll, use /enroll in this group.'
   await sendMessage(botToken, chatId, message, messageId)
 }
 
-export async function sendLeagueReminder(botToken: string, groupId: number) {
+export async function sendLeagueReminder(
+  botToken: string,
+  groupId: number,
+  kv: KVNamespace,
+) {
   console.log(`Fetch the list for group ${groupId}`)
-  const userIds = await getEnrollmentUserIds(groupId)
+  const userIds = await getEnrollmentUserIds(groupId, kv)
   if (userIds.length === 0) {
     console.log(`No subscribers for group ${groupId}, skipping`)
     return
   }
   console.log(
-    `Sending league reminder to group ${groupId}: ${userIds.join(',')}`
+    `Sending league reminder to group ${groupId}: ${userIds.join(',')}`,
   )
   const titleText = "Don't forget to setup the League unit!"
   const mentionText = userIds
@@ -50,6 +58,6 @@ export async function sendLeagueReminder(botToken: string, groupId: number) {
   await sendMessage(
     botToken,
     groupId,
-    [titleText, mentionText, footerText].join('\n')
+    [titleText, mentionText, footerText].join('\n'),
   )
 }

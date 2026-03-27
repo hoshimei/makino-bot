@@ -1,8 +1,0 @@
-{
-  "version": "5",
-  "remote": {
-    "https://esm.sh/dayjs@1.11.10/": "ee76df45dea7bec0217949e9d6d04dbff2d33587bd12648439dceeabe7b3c9f4",
-    "https://esm.sh/dayjs@1.11.10/plugin/timezone": "339ca759cf912b8fbda379c51755d00b0db244fb23602a7eccae84b39271d258",
-    "https://esm.sh/dayjs@1.11.10/plugin/utc": "5bd1dbbfb5fc31513292cbcf79a0010b10dcfc9c7ac4141e75377a80d7d930f0"
-  }
-}

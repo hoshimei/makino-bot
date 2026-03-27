@@ -1,4 +1,4 @@
-import type { CharacterInfo } from './types.ts'
+import type { CharacterInfo } from './types'
 
 export const Characters: CharacterInfo[] = [
   { name: '長瀬 琴乃', image: 'icon_ktn.png', birthday: '12/25' },

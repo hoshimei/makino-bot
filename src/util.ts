@@ -1,13 +1,14 @@
-import dayjs from 'dayjs/'
+import dayjs from 'dayjs'
+import dayjsTimezone from 'dayjs/plugin/timezone'
 import {
   AutoConfigPath,
   BotUsername,
   Characters,
   DebugGroupId,
   ImgBasePath,
-} from './const.ts'
-import type { Result } from './types.ts'
-import { birthdayIdol, randomIdol } from './idol.ts'
+} from './const'
+import type { Result } from './types'
+import { birthdayIdol, randomIdol } from './idol'
 import {
   changeAvatar,
   changeTitle,
@@ -15,18 +16,21 @@ import {
   getChat,
   sendMessage,
   setupWebhook,
-} from './telegram.ts'
-import { HookPath } from './const.ts'
+} from './telegram'
+import { HookPath } from './const'
 import {
   enrollLeagueAlert,
   sendLeagueReminder,
   unenrollLeagueAlert,
-} from './league.ts'
+} from './league'
+
+dayjs.extend(dayjsTimezone)
 
 export async function updateMakino(
   botToken: string,
   groupId: string,
   forced: boolean,
+  kv: KVNamespace,
   debugIndex?: number,
 ) {
   const lastChat = await getChat(botToken, groupId)
@@ -61,8 +65,8 @@ export async function updateMakino(
   ])
 }
 
-async function handleMessage(m: any) {
-  const botToken = Deno.env.get('BOT_TOKEN') ?? ''
+async function handleMessage(m: any, env: any) {
+  const botToken = env.BOT_TOKEN ?? ''
 
   if (m.from.username === BotUsername) {
     // clean up bot's own message
@@ -76,23 +80,35 @@ async function handleMessage(m: any) {
         ? Number(m.text.match(/d\+(\d+)/)?.[1])
         : undefined
     // update the title
-    await updateMakino(botToken, m.chat.id, true, debugIndex)
+    await updateMakino(botToken, m.chat.id, true, env.MAKINO_KV, debugIndex)
     return
   }
 
   if (m.text && m.text.startsWith('/enroll')) {
-    await enrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
+    await enrollLeagueAlert(
+      botToken,
+      m.message_id,
+      m.chat.id,
+      m.from,
+      env.MAKINO_KV,
+    )
     return
   }
 
   if (m.text && m.text.startsWith('/unenroll')) {
-    await unenrollLeagueAlert(botToken, m.message_id, m.chat.id, m.from)
+    await unenrollLeagueAlert(
+      botToken,
+      m.message_id,
+      m.chat.id,
+      m.from,
+      env.MAKINO_KV,
+    )
     return
   }
 
   if (m.chat.title.includes('#test')) {
     if (m.text && m.text.startsWith('/debug_reminder')) {
-      await sendLeagueReminder(botToken, m.chat.id)
+      await sendLeagueReminder(botToken, m.chat.id, env.MAKINO_KV)
       return
     }
 
@@ -108,20 +124,20 @@ async function handleMessage(m: any) {
   }
 }
 
-async function handleUpdate(u: any) {
+async function handleUpdate(u: any, env: any) {
   if (u.message) {
     console.log('Handling message:', u.message)
-    await handleMessage(u.message)
+    await handleMessage(u.message, env)
   }
 }
 
-export async function handleRequest(r: Request): Promise<Response> {
-  const botToken = Deno.env.get('BOT_TOKEN')
+export async function handleRequest(r: Request, env: any): Promise<Response> {
+  const botToken = env.BOT_TOKEN
   if (!botToken) {
     return new Response('No bot token', { status: 500 })
   }
 
-  const secToken = Deno.env.get('SECURITY_TOKEN') ?? ''
+  const secToken = env.SECURITY_TOKEN ?? ''
   if (!secToken) {
     return new Response('No sec token', { status: 500 })
   }
@@ -154,7 +170,7 @@ export async function handleRequest(r: Request): Promise<Response> {
       ) {
         return new Response(null, { status: 403 })
       }
-      await handleUpdate(await r.json()).catch((e) => {
+      await handleUpdate(await r.json(), env).catch((e) => {
         console.error('Handleing update:', e)
       })
       return new Response('ok', { status: 200 })

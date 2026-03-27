@@ -1,8 +1,8 @@
-import dayjs from 'dayjs/'
+import dayjs from 'dayjs'
 import dayjsUtc from 'dayjs/plugin/utc'
 import dayjsTimezone from 'dayjs/plugin/timezone'
-import { Characters } from './const.ts'
-import type { CharacterInfo, Result } from './types.ts'
+import { Characters } from './const'
+import type { CharacterInfo, Result } from './types'
 
 dayjs.extend(dayjsUtc)
 dayjs.extend(dayjsTimezone)
