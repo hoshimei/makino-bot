@@ -5,6 +5,9 @@ main = "src/index.ts"
 workers_dev = true
 preview_urls = false
 
+[triggers]
+crons = ["0 * * * *", "0 0 * * 2"]
+
 [[kv_namespaces]]
 binding = "MAKINO_KV"
 id = "29d8425c8bc14ba7bfa3dc520197fcb0"
