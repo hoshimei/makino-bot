@@ -4,9 +4,9 @@
     "description": "Telegram bot for updating group titles and avatars",
     "main": "dist/index.js",
     "scripts": {
-        "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --target=es2022",
-        "dev": "wrangler dev",
-        "deploy": "wrangler deploy"
+        "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --target=es2022 --loader:.jpg=binary",
+        "dev": "npm run build && wrangler dev",
+        "deploy": "npm run build && wrangler deploy"
     },
     "dependencies": {
         "dayjs": "^1.11.23"

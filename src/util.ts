@@ -5,7 +5,6 @@ import {
   BotUsername,
   Characters,
   DebugGroupId,
-  ImgBasePath,
 } from './const'
 import type { Result } from './types'
 import { birthdayIdol, randomIdol } from './idol'
@@ -42,7 +41,7 @@ export async function updateMakino(
     if (forced) {
       // Don't update title but try to update image
       const { image } = result
-      await Promise.all([changeAvatar(botToken, groupId, ImgBasePath + image)])
+      await Promise.all([changeAvatar(botToken, groupId, image as any)])
     }
     return
   }
@@ -61,7 +60,7 @@ export async function updateMakino(
   console.log(`Updating chat ${groupId} to ${title}`)
   await Promise.all([
     changeTitle(botToken, groupId, title),
-    changeAvatar(botToken, groupId, ImgBasePath + image),
+    changeAvatar(botToken, groupId, image),
   ])
 }
 
@@ -80,7 +79,13 @@ async function handleMessage(m: any, env: any) {
         ? Number(m.text.match(/d\+(\d+)/)?.[1])
         : undefined
     // update the title
-    await updateMakino(botToken, m.chat.id, true, env.MAKINO_KV, debugIndex)
+    await updateMakino(
+      botToken,
+      m.chat.id,
+      true,
+      env.MAKINO_KV,
+      debugIndex,
+    )
     return
   }
 

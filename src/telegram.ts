@@ -1,4 +1,5 @@
 import type { Chat } from './types'
+import { type AvatarfileName, getAvatar } from './avatars'
 
 async function tg(
   botToken: string,
@@ -10,9 +11,9 @@ async function tg(
     formData === undefined
       ? fetch(requestUrl)
       : fetch(requestUrl, {
-          method: 'POST',
-          body: formData,
-        })
+        method: 'POST',
+        body: formData,
+      })
   return fetchBase
     .then((x) => x.json())
     .then((x) => {
@@ -32,12 +33,12 @@ async function tgJson(
     data === undefined
       ? fetch(requestUrl)
       : fetch(requestUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: data,
-        })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      })
   return fetchBase
     .then((x) => x.json())
     .then((x) => {
@@ -80,12 +81,14 @@ export function setupWebhook(
 export async function changeAvatar(
   botToken: string,
   groupId: string,
-  avatarUrl: string,
+  image: AvatarfileName,
 ) {
-  const photo = await fetch(avatarUrl).then((x) => x.blob())
+  const photo = new Blob([new Uint8Array(getAvatar(image))], {
+    type: 'image/jpeg',
+  })
   const formData = new FormData()
   formData.set('chat_id', groupId)
-  formData.set('photo', photo)
+  formData.set('photo', photo, 'avatar.jpg')
   return tg(botToken, 'setChatPhoto', formData)
 }
 
@@ -108,10 +111,10 @@ export async function sendMessage(
     parse_mode: 'HTML',
     ...(replyToMessageId
       ? {
-          reply_parameters: {
-            message_id: replyToMessageId,
-          },
-        }
+        reply_parameters: {
+          message_id: replyToMessageId,
+        },
+      }
       : {}),
   }
 

@@ -27,9 +27,12 @@ export default {
     switch (event.cron) {
       case '0 * * * *': // Hourly - Do the Makino job
         for (const groupId of groupIds) {
-          await updateMakino(botToken, groupId, false, env.MAKINO_KV).catch(
-            console.error,
-          )
+          await updateMakino(
+            botToken,
+            groupId,
+            false,
+            env.MAKINO_KV,
+          ).catch(console.error)
         }
         break
 

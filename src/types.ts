@@ -1,3 +1,5 @@
+import type { AvatarfileName } from "./avatars"
+
 export type Result = {
   title: string
   image: string
@@ -5,7 +7,7 @@ export type Result = {
 
 export type CharacterInfo = {
   name: string
-  image: string
+  image: AvatarfileName
   birthday?: string
   isAprilOffer?: boolean
 }
